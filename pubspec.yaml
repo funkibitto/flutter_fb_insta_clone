@@ -20,6 +20,7 @@ dependencies:
   intl: ^0.17.0
   uuid: ^3.0.5
   device_preview: ^1.0.0
+  infinite_scroll_pagination: ^3.1.0
 
 dev_dependencies: 
   flutter_lints: ^1.0.0

@@ -11,20 +11,26 @@ class MobileLayout extends GetResponsiveView<RootController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Scaffold(
-        body: AppConstants.rootViewItems[controller.currentIndex.value].widget,
-        bottomNavigationBar: CupertinoTabBar(
-          backgroundColor: AppColors.mobileBackgroundColor,
-          items: List<BottomNavigationBarItem>.generate(
-            AppConstants.rootViewItems.length,
-            (index) => _buildBarItem(
-              iconData: AppConstants.rootViewItems[index].iconData,
-              isSelected: controller.currentIndex.value == index,
+      return WillPopScope(
+        child: Scaffold(
+          body:
+              AppConstants.rootViewItems[controller.currentIndex.value].widget,
+          bottomNavigationBar: CupertinoTabBar(
+            backgroundColor: AppColors.mobileBackgroundColor,
+            items: List<BottomNavigationBarItem>.generate(
+              AppConstants.rootViewItems.length,
+              (index) => _buildBarItem(
+                iconData: AppConstants.rootViewItems[index].iconData,
+                isSelected: controller.currentIndex.value == index,
+              ),
             ),
+            onTap: controller.onChangedTab,
+            currentIndex: controller.currentIndex.value,
           ),
-          onTap: controller.onChangedTab,
-          currentIndex: controller.currentIndex.value,
         ),
+        onWillPop: () async {
+          return false;
+        },
       );
     });
   }
