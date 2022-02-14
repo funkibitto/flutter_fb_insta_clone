@@ -1,4 +1,4 @@
-import 'package:flutter_fb_insta_clone/app/modules/auth/services/auth_service.dart';
+import 'package:flutter_fb_insta_clone/app/services/auth_service.dart';
 import 'package:get/get.dart';
 
 class RootController extends GetxController {

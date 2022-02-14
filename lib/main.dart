@@ -1,7 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fb_insta_clone/app/core/theme/app_colors.dart';
 import 'package:flutter_fb_insta_clone/firebase_options.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:get/get.dart';
 
@@ -28,9 +30,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Instagram Clone',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: AppColors.mobileBackgroundColor,
+      ),
+      localizationsDelegates: const [
+        FormBuilderLocalizations.delegate,
+      ],
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     );
