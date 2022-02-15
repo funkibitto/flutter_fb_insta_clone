@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_fb_insta_clone/app/core/utils/app_utils.dart';
+import 'package:flutter_fb_insta_clone/app/modules/root/views/root_view.dart';
+import 'package:flutter_fb_insta_clone/app/services/auth_service.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,31 +13,10 @@ class SignupController extends GetxController {
   final image = Rxn<Uint8List>();
 
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-  late TextEditingController usernameController,
-      emailController,
-      passwordController,
-      bioController;
 
   @override
   void onInit() {
     super.onInit();
-    usernameController = TextEditingController();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    bioController = TextEditingController();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    usernameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    bioController.dispose();
   }
 
   String? validateUsername(String value) {
@@ -65,10 +46,28 @@ class SignupController extends GetxController {
     image.value = im;
   }
 
-  void submit() {
-    final isValid = formKey.currentState!.validate();
-    if (!isValid) {
-      return;
+  submit() async {
+    // Get.offAllNamed('/');
+    // return;
+    if (!isLoading.value &&
+        (formKey.currentState?.saveAndValidate() ?? false)) {
+      debugPrint(formKey.currentState?.value.toString());
+
+      isLoading(true);
+      String res = await AuthService.to.signUpUser(
+        email: formKey.currentState?.value['email'],
+        password: formKey.currentState?.value['password'],
+        username: formKey.currentState?.value['username'],
+        bio: formKey.currentState?.value['bio'],
+        file: image.value,
+      );
+      if (res == "success") {
+        Get.offAllNamed('/');
+      } else {
+        // show the error
+        AppUtils.showSnackBar(Get.context!, res);
+      }
     }
+    isLoading(false);
   }
 }

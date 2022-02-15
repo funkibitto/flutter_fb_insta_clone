@@ -26,6 +26,7 @@ class AppPages {
       name: _Paths.ROOT,
       page: () => RootView(),
       binding: RootBinding(),
+      transition: Transition.noTransition,
     ),
     GetPage(
       name: _Paths.SIGNUP,

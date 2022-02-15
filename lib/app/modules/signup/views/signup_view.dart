@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fb_insta_clone/app/core/theme/app_colors.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -53,6 +54,58 @@ class SignupView extends GetView<SignupController> {
                   const SizedBox(
                     height: 24,
                   ),
+                  _buildBioField(),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  InkWell(
+                    child: Obx(() => Container(
+                          child: !controller.isLoading.value
+                              ? const Text(
+                                  'Sign up',
+                                )
+                              : const CircularProgressIndicator(
+                                  color: AppColors.primaryColor,
+                                ),
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: const ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                            ),
+                            color: AppColors.blueColor,
+                          ),
+                        )),
+                    onTap: controller.submit,
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: const Text(
+                          'Already have an account?',
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
+                      GestureDetector(
+                        onTap: () => Get.to('/login'),
+                        child: Container(
+                          child: const Text(
+                            ' Login.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -77,14 +130,15 @@ class SignupView extends GetView<SignupController> {
                     NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
                 backgroundColor: Colors.red,
               ),
-        Positioned(
-          bottom: -10,
-          left: 80,
-          child: IconButton(
-            onPressed: controller.selectImage,
-            icon: const Icon(Icons.add_a_photo),
-          ),
-        )
+        if (kReleaseMode == true)
+          Positioned(
+            bottom: -10,
+            left: 80,
+            child: IconButton(
+              onPressed: controller.selectImage,
+              icon: const Icon(Icons.add_a_photo),
+            ),
+          )
       ],
     );
   }
@@ -92,7 +146,7 @@ class SignupView extends GetView<SignupController> {
   Widget _buildUsernameField() {
     return Builder(builder: (context) {
       return FormBuilderTextField(
-        name: 'Username',
+        name: 'username',
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: const InputDecoration(
           labelText: 'User name',
@@ -174,6 +228,23 @@ class SignupView extends GetView<SignupController> {
             }
             return null;
           }
+        ]),
+      );
+    });
+  }
+
+  Widget _buildBioField() {
+    return Builder(builder: (context) {
+      return FormBuilderTextField(
+        name: 'bio',
+        decoration: const InputDecoration(
+          labelText: 'Bio',
+        ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(
+            context,
+            errorText: 'Bio required',
+          ),
         ]),
       );
     });
