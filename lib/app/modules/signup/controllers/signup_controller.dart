@@ -62,7 +62,7 @@ class SignupController extends GetxController {
         file: image.value,
       );
       if (res == "success") {
-        Get.offAllNamed('/');
+        Get.offAllNamed('/root');
       } else {
         // show the error
         AppUtils.showSnackBar(Get.context!, res);
