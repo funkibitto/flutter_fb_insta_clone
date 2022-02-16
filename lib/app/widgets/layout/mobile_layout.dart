@@ -16,6 +16,7 @@ class MobileLayout extends GetResponsiveView<RootController> {
           body:
               AppConstants.rootViewItems[controller.currentIndex.value].widget,
           bottomNavigationBar: CupertinoTabBar(
+            height: 60.0,
             backgroundColor: AppColors.mobileBackgroundColor,
             items: List<BottomNavigationBarItem>.generate(
               AppConstants.rootViewItems.length,

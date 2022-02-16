@@ -1,16 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fb_insta_clone/app/core/mixins/form_input_mixin.dart';
 import 'package:flutter_fb_insta_clone/app/core/theme/app_colors.dart';
+import 'package:flutter_fb_insta_clone/app/modules/signup/controllers/signup_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'package:flutter_fb_insta_clone/app/modules/signup/controllers/signup_controller.dart';
 
-class SignupView extends GetView<SignupController> {
+class SignupView extends GetView<SignupController> with FormInputMixin {
   const SignupView({Key? key}) : super(key: key);
-
-  void _onChanged(dynamic val) => debugPrint(val.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +37,23 @@ class SignupView extends GetView<SignupController> {
                   const SizedBox(
                     height: 24,
                   ),
-                  _buildUsernameField(),
+                  buildUsernameField(),
                   const SizedBox(
                     height: 24,
                   ),
-                  _buildEmailField(),
+                  buildEmailField(),
                   const SizedBox(
                     height: 24,
                   ),
-                  _buildPasswordField(),
+                  buildPasswordField(),
                   const SizedBox(
                     height: 24,
                   ),
-                  _buildConfirmPasswordField(),
+                  buildConfirmPasswordField(formKey: controller.formKey),
                   const SizedBox(
                     height: 24,
                   ),
-                  _buildBioField(),
+                  buildBioField(),
                   const SizedBox(
                     height: 24,
                   ),
@@ -141,112 +140,5 @@ class SignupView extends GetView<SignupController> {
           )
       ],
     );
-  }
-
-  Widget _buildUsernameField() {
-    return Builder(builder: (context) {
-      return FormBuilderTextField(
-        name: 'username',
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: const InputDecoration(
-          labelText: 'User name',
-        ),
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(
-            context,
-            errorText: 'User required',
-          ),
-        ]),
-      );
-    });
-  }
-
-  Widget _buildEmailField() {
-    return Builder(builder: (context) {
-      return FormBuilderTextField(
-        name: 'email',
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: const InputDecoration(
-          labelText: 'Email',
-        ),
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(
-            context,
-            errorText: 'email required',
-          ),
-          FormBuilderValidators.email(
-            context,
-            errorText: 'not email',
-          ),
-        ]),
-      );
-    });
-  }
-
-  Widget _buildPasswordField() {
-    return Builder(builder: (context) {
-      return FormBuilderTextField(
-        name: 'password',
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: const InputDecoration(
-          labelText: 'Password',
-        ),
-        obscureText: true,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(
-            context,
-            errorText: 'Password required',
-          ),
-          FormBuilderValidators.minLength(
-            context,
-            6,
-            errorText: 'Password min length 6',
-          ),
-        ]),
-      );
-    });
-  }
-
-  Widget _buildConfirmPasswordField() {
-    return Builder(builder: (context) {
-      return FormBuilderTextField(
-        name: 'confirm_password',
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: const InputDecoration(
-          labelText: 'Confirm Password',
-        ),
-        obscureText: true,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(
-            context,
-            errorText: 'Password required',
-          ),
-          (val) {
-            if (val !=
-                controller.formKey.currentState?.fields['password']?.value) {
-              return 'Passwords do not match';
-            }
-            return null;
-          }
-        ]),
-      );
-    });
-  }
-
-  Widget _buildBioField() {
-    return Builder(builder: (context) {
-      return FormBuilderTextField(
-        name: 'bio',
-        decoration: const InputDecoration(
-          labelText: 'Bio',
-        ),
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(
-            context,
-            errorText: 'Bio required',
-          ),
-        ]),
-      );
-    });
   }
 }

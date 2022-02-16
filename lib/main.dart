@@ -5,6 +5,7 @@ import 'package:flutter_fb_insta_clone/app/core/theme/app_colors.dart';
 import 'package:flutter_fb_insta_clone/app/services/auth_service.dart';
 import 'package:flutter_fb_insta_clone/app/services/storage_service.dart';
 import 'package:flutter_fb_insta_clone/firebase_options.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:get/get.dart';
@@ -37,7 +38,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: AppColors.mobileBackgroundColor,
       ),
-      home: const CircularProgressIndicator(),
+      home: const Center(
+        child: SpinKitWave(color: Colors.white, size: 20.0),
+      ),
       initialBinding: BindingsBuilder(
         () {
           Get.put(AuthService());

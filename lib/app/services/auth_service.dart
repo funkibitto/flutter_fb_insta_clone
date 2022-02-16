@@ -29,17 +29,16 @@ class AuthService extends GetxService {
     super.onReady();
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.userChanges());
-    print('_auth ${_auth.currentUser}');
     ever(_firebaseUser, _setInitialScreen);
   }
 
   // firebase user state check
   _setInitialScreen(User? user) {
-    print('99999_auth ${_auth.currentUser}');
     // route change
     if (user == null) {
       Get.offAllNamed('/login');
     } else {
+      // Get.offAllNamed('/root');
       Get.offAllNamed('/root');
     }
   }
@@ -102,5 +101,32 @@ class AuthService extends GetxService {
       return err.toString();
     }
     return res;
+  }
+
+  // logging in user
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    String res = "Some error Occurred";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        // logging in user with email and password
+        await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        res = "success";
+      } else {
+        res = "Please enter all the fields";
+      }
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }
