@@ -117,10 +117,8 @@ mixin FormInputMixin {
         name: 'description',
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: const InputDecoration(
-           hintText: "Write a caption...",
-           border: InputBorder.none
-        ),
-        maxLines: 8,
+            hintText: "Write a caption...", border: InputBorder.none),
+        maxLines: 3,
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(
             context,

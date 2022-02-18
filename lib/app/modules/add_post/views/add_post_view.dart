@@ -33,7 +33,7 @@ class AddPostView extends GetView<AddPostController> with FormInputMixin {
               padding: const EdgeInsets.all(20),
               child: const Text("Cancel"),
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             )
           ],
@@ -98,13 +98,18 @@ class AddPostView extends GetView<AddPostController> with FormInputMixin {
                           ),
                         )
                       else
-                        Container(),
+                        Container(
+                          color: Colors.red,
+                        ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: buildDescriptionField(),
+                        ),
+                      ),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: buildDescriptionField()),
-                      SizedBox(
-                        height: 45.0,
-                        width: 45.0,
+                        height: 80.0,
+                        width: 80.0,
                         child: AspectRatio(
                           aspectRatio: 487 / 451,
                           child: Container(

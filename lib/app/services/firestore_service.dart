@@ -1,10 +1,8 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_fb_insta_clone/app/data/models/post.dart';
 import 'package:flutter_fb_insta_clone/app/services/storage_service.dart';
-import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreService {
