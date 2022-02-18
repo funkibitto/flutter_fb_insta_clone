@@ -5,7 +5,6 @@ import 'package:flutter_fb_insta_clone/app/core/theme/app_colors.dart';
 import 'package:flutter_fb_insta_clone/app/modules/signup/controllers/signup_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 
 class SignupView extends GetView<SignupController> with FormInputMixin {
@@ -117,27 +116,28 @@ class SignupView extends GetView<SignupController> with FormInputMixin {
   Widget _buildProfileImage() {
     return Stack(
       children: [
-        controller.image.value != null
-            ? CircleAvatar(
-                radius: 64,
-                backgroundImage: MemoryImage(controller.image.value!),
-                backgroundColor: Colors.red,
-              )
-            : const CircleAvatar(
-                radius: 64,
-                backgroundImage:
-                    NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
-                backgroundColor: Colors.red,
-              ),
-        if (kReleaseMode == true)
-          Positioned(
-            bottom: -10,
-            left: 80,
-            child: IconButton(
-              onPressed: controller.selectImage,
-              icon: const Icon(Icons.add_a_photo),
-            ),
-          )
+        Obx(
+          () => controller.image.value != null
+              ? CircleAvatar(
+                  radius: 64,
+                  backgroundImage: MemoryImage(controller.image.value!),
+                  backgroundColor: Colors.white,
+                )
+              : const CircleAvatar(
+                  radius: 64,
+                  backgroundImage:
+                      NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
+                  backgroundColor: Colors.white,
+                ),
+        ),
+        Positioned(
+          bottom: -10,
+          left: 80,
+          child: IconButton(
+            onPressed: controller.selectImage,
+            icon: const Icon(Icons.add_a_photo),
+          ),
+        )
       ],
     );
   }

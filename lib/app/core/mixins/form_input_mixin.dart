@@ -110,4 +110,24 @@ mixin FormInputMixin {
       );
     });
   }
+
+  Widget buildDescriptionField() {
+    return Builder(builder: (context) {
+      return FormBuilderTextField(
+        name: 'description',
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+           hintText: "Write a caption...",
+           border: InputBorder.none
+        ),
+        maxLines: 8,
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(
+            context,
+            errorText: 'description required',
+          ),
+        ]),
+      );
+    });
+  }
 }

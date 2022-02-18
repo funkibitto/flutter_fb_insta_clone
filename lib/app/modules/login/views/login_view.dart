@@ -4,7 +4,6 @@ import 'package:flutter_fb_insta_clone/app/core/theme/app_colors.dart';
 import 'package:flutter_fb_insta_clone/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 
 class LoginView extends GetResponsiveView<LoginController> with FormInputMixin {

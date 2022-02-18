@@ -41,4 +41,6 @@ class User {
         "followers": followers,
         "following": following,
       };
+
+  get isPhotoUrl => photoUrl?.isNotEmpty ?? false;
 }

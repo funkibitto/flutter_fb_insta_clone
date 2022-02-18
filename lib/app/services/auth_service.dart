@@ -36,9 +36,10 @@ class AuthService extends GetxService {
   _setInitialScreen(User? user) {
     // route change
     if (user == null) {
+      clearUser();
       Get.offAllNamed('/login');
     } else {
-      // Get.offAllNamed('/root');
+      initializeUser();
       Get.offAllNamed('/root');
     }
   }
@@ -48,8 +49,7 @@ class AuthService extends GetxService {
     User currentUser = _auth.currentUser!;
     DocumentSnapshot documentSnapshot =
         await _firebaseFirestore.collection('users').doc(currentUser.uid).get();
-
-    return model.User.fromSnap(documentSnapshot);
+    user.value = model.User.fromSnap(documentSnapshot);
   }
 
   Future<String> signUpUser({
@@ -73,7 +73,7 @@ class AuthService extends GetxService {
 
         String? photoUrl;
         if (file != null) {
-          photoUrl = await StorageService.to
+          photoUrl = await StorageService()
               .uploadImageToStorage('profilePics', file, false);
         }
 
@@ -128,5 +128,10 @@ class AuthService extends GetxService {
 
   Future<void> signOut() async {
     await _auth.signOut();
+    user.value = null;
+  }
+
+  clearUser() {
+    user.value = null;
   }
 }
